@@ -6,13 +6,21 @@ Main important feel is that it will provide sentiment scores and visualisation .
 
 Project Structures:
 sentiment-analyzer/
+
 │
+
 ├── venv/
+
 ├── static/
+
 │   ├── css/         # For CSS files
+
 │   └── js/          # For JavaScript files
+
 ├── templates/       # For HTML templates
+
 ├── models/          # For storing our trained model
+
 └── app.py           # Main application file
 
 ![image](https://github.com/user-attachments/assets/adab4541-d98b-48ef-8b04-32582bbaa51d)

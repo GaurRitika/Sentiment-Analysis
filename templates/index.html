@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentiment Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Sentiment Analyzer</h1>
+        <p>Enter text to analyze its sentiment</p>
+        
+        <form method="post" action="/">
+            <textarea name="text" rows="6" placeholder="Enter text here..." required>{{ text if text }}</textarea>
+            <button type="submit">Analyze</button>
+        </form>
+        
+        {% if sentiment %}
+        <div class="result">
+            <h2>Analysis Results:</h2>
+            
+            <div class="sentiment-overview">
+                <div class="sentiment-score {{ sentiment_class }}">
+                    <h3>Overall Sentiment:</h3>
+                    <p class="sentiment-label">{{ sentiment }}</p>
+                    <p class="score">Score: {{ compound_score }}</p>
+                </div>
+                
+                <div class="sentiment-details">
+                    <div class="detail-item">
+                        <span class="label">Positive:</span>
+                        <span class="value">{{ pos_score }}</span>
+                        <div class="bar-container">
+                            <div class="bar positive" style="width: {{ pos_score * 100 }}%"></div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Neutral:</span>
+                        <span class="value">{{ neu_score }}</span>
+                        <div class="bar-container">
+                            <div class="bar neutral" style="width: {{ neu_score * 100 }}%"></div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Negative:</span>
+                        <span class="value">{{ neg_score }}</span>
+                        <div class="bar-container">
+                            <div class="bar negative" style="width: {{ neg_score * 100 }}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="charts-container">
+                <div id="sentimentPie" class="chart"></div>
+                <div id="wordCloud" class="chart">
+                    <h3>Key Words</h3>
+                    <div class="word-cloud">
+                        {% for word in key_words %}
+                        <span class="word {{ word.sentiment }}" style="font-size: {{ word.size }}px">{{ word.text }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-analysis">
+                <h3>Text Analysis</h3>
+                <p><strong>Word Count:</strong> {{ word_count }}</p>
+                <p><strong>Sentence Count:</strong> {{ sentence_count }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    {% if sentiment %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var data = [{
+                values: [{{ pos_score }}, {{ neu_score }}, {{ neg_score }}],
+                labels: ['Positive', 'Neutral', 'Negative'],
+                type: 'pie',
+                marker: {
+                    colors: ['#4CAF50', '#FFC107', '#F44336']
+                }
+            }];
+            
+            var layout = {
+                title: 'Sentiment Distribution',
+                height: 300,
+                width: 400,
+                margin: {t: 40, b: 0, l: 0, r: 0}
+            };
+            
+            Plotly.newPlot('sentimentPie', data, layout);
+        });
+    </script>
+    {% endif %}
+</body>
+</html>

@@ -13,15 +13,15 @@ sentiment-analyzer/
 
 ├── static/
 
-│   ├── css/         # For CSS files
+│   ├── css/                         # For CSS files
 
-│   └── js/          # For JavaScript files
+│   └── js/                          # For JavaScript files
 
-├── templates/       # For HTML templates
+├── templates/                       # For HTML templates
 
-├── models/          # For storing our trained model
+├── models/                          # For storing our trained model
 
-└── app.py           # Main application file
+└── app.py                           # Main application file
 
 ![image](https://github.com/user-attachments/assets/adab4541-d98b-48ef-8b04-32582bbaa51d)
 
